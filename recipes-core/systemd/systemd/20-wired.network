@@ -1,0 +1,9 @@
+[Match]
+Name=eth0
+
+[Network]
+DHCP=ipv4
+
+# Used for static IP address
+#Address=192.168.100.65/24
+#Gateway=192.168.100.1
