@@ -11,26 +11,50 @@ COMMON_FEATURES = " \
     "
 IMAGE_FEATURES += "${COMMON_FEATURES}"
 
-IMAGE_INSTALL = " \
+# Basic OS components
+CORE_OS_INSTALL = " \
+    kernel-modules \
     packagegroup-core-boot \
-    \
     packagegroup-core-ssh-dropbear \
     openssh-sftp-server \
-    kernel-modules \
-    fb-test fbgrab fbida \
-    iw \
-    evtest tslib tslib-calibrate tslib-tests \
-    \
-    ${CORE_IMAGE_EXTRA_INSTALL} \
-    "
+"
 
-# no locales
+# Framebuffer support
+FB_TOOLS_INSTALL = " \
+    fb-test fbgrab fbida \
+"
+
+# Touchscreen support
+TS_TOOLS_INSTALL = " \
+    evtest \
+    tslib tslib-calibrate tslib-tests \
+"
+
+# Wifi support
+WIFI_TOOLS_INSTALL = " \
+    iw \
+"
+
+# Misc
+EXTRA_TOOLS_INSTALL = " \
+"
+
+IMAGE_INSTALL = " \
+    ${CORE_OS_INSTALL} \
+    ${FB_TOOLS_INSTALL} \
+    ${TS_TOOLS_INSTALL} \
+    ${WIFI_TOOLS_INSTALL} \
+    ${EXTRA_TOOLS_INSTALL} \
+    ${CORE_IMAGE_EXTRA_INSTALL} \
+"
+
+# No locales
 IMAGE_LINGUAS = " "
 
-# add extra free disk space
+# Add extra free disk space
 IMAGE_OVERHEAD_FACTOR = "2.0"
 
-# set empty root password
+# Set empty root password
 inherit extrausers
 EXTRA_USERS_PARAMS = "\
     usermod -P \"\" root; \
