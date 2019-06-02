@@ -1,4 +1,3 @@
-
 RPI_CONFIG_TXT = "${DEPLOYDIR}/bcm2835-bootfiles/config.txt"
 
 do_deploy_append() {

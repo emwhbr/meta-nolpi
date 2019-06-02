@@ -1,3 +1,6 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+SRC_URI_append += "file://defconfig"
 
 RPI_CMDLINE_TXT = "${DEPLOYDIR}/bcm2835-bootfiles/cmdline.txt"
 
