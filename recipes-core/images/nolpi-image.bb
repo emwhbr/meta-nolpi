@@ -19,6 +19,11 @@ CORE_OS_INSTALL = " \
     openssh-sftp-server \
 "
 
+# Firmware files for Raspberry Pi hardware
+RPI_FW_INSTALL = " \
+    linux-firmware-rpidistro-bcm43455 \
+"
+
 # Framebuffer support
 FB_TOOLS_INSTALL = " \
     fb-test fbgrab fbida \
@@ -33,14 +38,18 @@ TS_TOOLS_INSTALL = " \
 # Wifi support
 WIFI_TOOLS_INSTALL = " \
     iw \
+    wpa-supplicant \
 "
 
 # Misc
 EXTRA_TOOLS_INSTALL = " \
+    i2c-tools \
+    usbutils \
 "
 
 IMAGE_INSTALL = " \
     ${CORE_OS_INSTALL} \
+    ${RPI_FW_INSTALL} \
     ${FB_TOOLS_INSTALL} \
     ${TS_TOOLS_INSTALL} \
     ${WIFI_TOOLS_INSTALL} \
