@@ -17,6 +17,7 @@ CORE_OS_INSTALL = " \
     packagegroup-core-boot \
     packagegroup-core-ssh-dropbear \
     openssh-sftp-server \
+    libstdc++ \
 "
 
 # Firmware files for Raspberry Pi hardware
@@ -56,6 +57,9 @@ IMAGE_INSTALL = " \
     ${EXTRA_TOOLS_INSTALL} \
     ${CORE_IMAGE_EXTRA_INSTALL} \
 "
+
+# Add to SDK target sysroot
+TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc linux-libc-headers-dev"
 
 # No locales
 IMAGE_LINGUAS = " "
