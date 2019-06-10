@@ -62,10 +62,10 @@ IMAGE_INSTALL = " \
 TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc linux-libc-headers-dev"
 
 # No locales
-IMAGE_LINGUAS = " "
+IMAGE_LINGUAS = ""
 
-# Add extra free disk space
-IMAGE_OVERHEAD_FACTOR = "2.0"
+# Make RFS fixed size (50MB)
+IMAGE_ROOTFS_SIZE = "51200"
 
 # Set empty root password
 inherit extrausers
