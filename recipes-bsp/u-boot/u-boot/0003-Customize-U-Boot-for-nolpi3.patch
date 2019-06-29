@@ -1,0 +1,85 @@
+From 1f3e88a1a0cc302f505ec9467cdd222d9fbbe91e Mon Sep 17 00:00:00 2001
+From: emwhbr <hakanbrolin@hotmail.com>
+Date: Sat, 29 Jun 2019 15:46:33 +0200
+Subject: [PATCH] Customize U-Boot for nolpi3
+
+Changed boot delay to 1s.
+Changed system prompt to "nolpi3> ".
+Changed loglevel to 5 (include warnings).
+
+Increased number of retries when waiting for writes to mmc to complete.
+Old level (100000) was not enough, noticed retires > 170000.
+New level set to 500000.
+
+Changed wbufsize to 128KB for gzwrite on mmc_update.
+This minimizes the number of retries to exceed old level of 100000.
+---
+ configs/rpi_3_32b_defconfig  |  4 +++-
+ drivers/mmc/bcm2835_sdhost.c | 10 ++++++++--
+ include/configs/rpi.h        |  4 ++--
+ 3 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/configs/rpi_3_32b_defconfig b/configs/rpi_3_32b_defconfig
+index bbf902bb91..71ef7f632e 100644
+--- a/configs/rpi_3_32b_defconfig
++++ b/configs/rpi_3_32b_defconfig
+@@ -9,7 +9,9 @@ CONFIG_OF_BOARD_SETUP=y
+ CONFIG_MISC_INIT_R=y
+ # CONFIG_DISPLAY_CPUINFO is not set
+ # CONFIG_DISPLAY_BOARDINFO is not set
+-CONFIG_SYS_PROMPT="U-Boot> "
++CONFIG_SYS_PROMPT="nolpi3> "
++CONFIG_BOOTDELAY=1
++CONFIG_LOGLEVEL=5
+ # CONFIG_CMD_FLASH is not set
+ CONFIG_CMD_GPIO=y
+ CONFIG_CMD_MMC=y
+diff --git a/drivers/mmc/bcm2835_sdhost.c b/drivers/mmc/bcm2835_sdhost.c
+index 1ce019af57..db16f1173e 100644
+--- a/drivers/mmc/bcm2835_sdhost.c
++++ b/drivers/mmc/bcm2835_sdhost.c
+@@ -254,8 +254,8 @@ static int bcm2835_wait_transfer_complete(struct bcm2835_host *host)
+ 			break;
+ 		}
+ 
+-		/* Error out after 100000 register reads (~1s) */
+-		if (timediff++ == 100000) {
++		/* Error out after 500000 register reads (~5s) */
++		if (timediff++ == 500000) {
+ 			dev_err(host->dev,
+ 				"wait_transfer_complete - still waiting after %d retries\n",
+ 				timediff);
+@@ -264,6 +264,12 @@ static int bcm2835_wait_transfer_complete(struct bcm2835_host *host)
+ 		}
+ 	}
+ 
++	if (timediff > 100000)
++	{
++		dev_warn(host->dev,
++			"wait_transfer_complete - warning, got %d retries\n", timediff);
++	}
++
+ 	return 0;
+ }
+ 
+diff --git a/include/configs/rpi.h b/include/configs/rpi.h
+index ad7e77df1b..cdb70af4f6 100644
+--- a/include/configs/rpi.h
++++ b/include/configs/rpi.h
+@@ -235,11 +235,11 @@
+ 				"echo ERROR: load image failed; "                            \
+ 			"fi; "                                                           \
+ 		"fi;"                                                                \
+-		"\0"      \
++		"\0"                                                                 \
+ 	\
+ 	"mmc_update="                                    \
+ 		"mmc dev 0; "                                \
+-		"setenv wbuf 0x100000; "                     \
++		"setenv wbuf 0x20000; "                      \
+ 		"setenv boot_iface mmc; setenv boot_dev 0; " \
+ 		"run dev_update"                             \
+ 		"\0"                                         \
+-- 
+2.17.1
+
