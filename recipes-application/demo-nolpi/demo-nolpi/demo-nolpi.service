@@ -1,0 +1,13 @@
+[Unit]
+Description=Nolpi demo application
+
+[Service]
+Type=simple
+Restart=no
+
+ExecStart=/usr/bin/nolpi.exe
+
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target

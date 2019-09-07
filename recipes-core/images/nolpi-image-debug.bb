@@ -10,3 +10,8 @@ EXTRA_TOOLS_INSTALL_append = " \
     strace \
     userland \
 "
+
+# Add the demo application 
+IMAGE_INSTALL_append = " \
+    demo-nolpi \
+"
