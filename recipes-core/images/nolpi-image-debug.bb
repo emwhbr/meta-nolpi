@@ -9,6 +9,7 @@ require nolpi-image.bb
 EXTRA_TOOLS_INSTALL_append = " \
     strace \
     userland \
+    libvncserver \
 "
 
 # Add the demo application 
