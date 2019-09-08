@@ -2,7 +2,7 @@
 Description=Nolpi demo application
 
 [Service]
-Type=simple
+Type=idle
 Restart=no
 
 ExecStart=/usr/bin/nolpi.exe
