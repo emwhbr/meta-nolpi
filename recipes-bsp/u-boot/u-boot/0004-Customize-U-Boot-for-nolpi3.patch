@@ -1,0 +1,30 @@
+From 95665777f766d5bc8c3116a9aa6ca2cd847954b3 Mon Sep 17 00:00:00 2001
+From: emwhbr <hakanbrolin@hotmail.com>
+Date: Sun, 8 Sep 2019 14:13:33 +0200
+Subject: [PATCH] Customize U-Boot for nolpi3
+
+Modified parameters for DTB overlay - TFT3.5
+ - Changed SPI speed from 20MHz to 40MHz.
+ - Changed FPS from 20 to 10.
+---
+ include/configs/rpi.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/configs/rpi.h b/include/configs/rpi.h
+index cdb70af4f6..ffa53455b8 100644
+--- a/include/configs/rpi.h
++++ b/include/configs/rpi.h
+@@ -185,8 +185,8 @@
+ 		"echo Load DTB overlay - TFT3.5; "                                            \
+ 		"fatload ${boot_iface} ${boot_dev}:${boot_part} ${fdtovaddr} ${dtbo_pitft35_file}; "  \
+ 		"fdt apply ${fdtovaddr}; "                                          \
+-		"fdt set /soc/spi@7e204000/pitft@0 fps <0x14>; "                    \
+-		"fdt set /soc/spi@7e204000/pitft@0 spi-max-frequency <0x1312d00>; " \
++		"fdt set /soc/spi@7e204000/pitft@0 fps <0x0a>; "                    \
++		"fdt set /soc/spi@7e204000/pitft@0 spi-max-frequency <0x2625a00>; " \
+ 		"fdt set /soc/spi@7e204000/pitft@0 rotate <0x5a>; "                 \
+ 		"echo Load kernel; "                                                \
+ 		"fatload ${boot_iface} ${boot_dev}:${boot_part} ${kernel_addr_r} ${kernel_file}; " \
+-- 
+2.17.1
+

@@ -1,0 +1,26 @@
+From bd21b9ec449eefb66868a2ac0c760d198daf0cdf Mon Sep 17 00:00:00 2001
+From: emwhbr <hakanbrolin@hotmail.com>
+Date: Sun, 8 Sep 2019 14:30:53 +0200
+Subject: [PATCH] Customize kernel for nolpi3
+
+Added default parameter value for parameter txbuflen in DTB overlay - TFT3.5.
+Value set to maximum (65535 Bytes). Previous value was 4KB.
+---
+ arch/arm/boot/dts/overlays/pitft35-resistive-overlay.dts | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/boot/dts/overlays/pitft35-resistive-overlay.dts b/arch/arm/boot/dts/overlays/pitft35-resistive-overlay.dts
+index 3271993c9755..2ac33f6c2b6e 100644
+--- a/arch/arm/boot/dts/overlays/pitft35-resistive-overlay.dts
++++ b/arch/arm/boot/dts/overlays/pitft35-resistive-overlay.dts
+@@ -55,6 +55,7 @@
+ 				pinctrl-0 = <&pitft_pins>;
+ 
+ 				spi-max-frequency = <32000000>;
++				txbuflen = <65535>;
+ 				rotate = <90>;
+ 				fps = <25>;
+ 				bgr;
+-- 
+2.17.1
+
